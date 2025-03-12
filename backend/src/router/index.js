@@ -82,22 +82,35 @@ const router = createRouter({
 //   }
 
 // })
-router.beforeEach((to, from, next) => {
-  console.log("Navigating to:", to.fullPath);
 
-  const isAuthenticated = store.state.user?.token;
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.state.user.token;
 
   if (to.meta.requiresAuth && !isAuthenticated) {
-    console.log("User not authenticated, redirecting to login...");
-    next({ name: 'login' });
+    next({ name: "login" });
   } else if (to.meta.requiresGuest && isAuthenticated) {
-    console.log("User already logged in, redirecting to dashboard...");
-    next({ name: 'app.dashboard' });
+    next({ name: "app.dashboard" });
   } else {
-    console.log("Proceeding to:", to.fullPath);
     next();
   }
 });
+
+// router.beforeEach((to, from, next) => {
+//   console.log("Navigating to:", to.fullPath);
+
+//   const isAuthenticated = store.state.user?.token;
+
+//   if (to.meta.requiresAuth && !isAuthenticated) {
+//     console.log("User not authenticated, redirecting to login...");
+//     next({ name: 'login' });
+//   } else if (to.meta.requiresGuest && isAuthenticated) {
+//     console.log("User already logged in, redirecting to dashboard...");
+//     next({ name: 'app.dashboard' });
+//   } else {
+//     console.log("Proceeding to:", to.fullPath);
+//     next();
+//   }
+// });
 
 
 export default router;

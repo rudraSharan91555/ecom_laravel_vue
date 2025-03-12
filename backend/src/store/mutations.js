@@ -11,13 +11,6 @@ export function setUser(state, user) {
       sessionStorage.removeItem('TOKEN')
     }
   }
-  // export function setToken(state, token) {
-  //   state.user.token = token;
-  //   if (token) {
-  //     localStorage.setItem('TOKEN', token);  
-  //   } else {
-  //     localStorage.removeItem('TOKEN')
-  //   }
-// }
+  
 
   

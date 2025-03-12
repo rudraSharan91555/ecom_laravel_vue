@@ -76,11 +76,19 @@ const emit = defineEmits(['toggle-sidebar'])
 
 const currentUser = computed(() => store.state.user.data);
 
+
 function logout() {
   store.dispatch('logout')
     .then(() => {
-      router.push({name: 'login'})
+      router.push({ name: 'login' }); 
     })
+    .catch(err => {
+      if (err.response && err.response.status === 204) {
+        router.push({ name: 'login' });
+      } else {
+        console.error("Logout Error:", err);
+      }
+    });
 }
 
 </script>
