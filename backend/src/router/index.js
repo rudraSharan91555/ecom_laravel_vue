@@ -53,11 +53,17 @@ const routes = [
       requiresGuest: true
     }
   },
+    // {
+    //   path: '/:pathMatch(.*)',
+    //   name: 'notfound',
+    //   component: NotFound,
+    // }
     {
-      path: '/:pathMatch(.*)',
+      path: '/:pathMatch(.*)*',
       name: 'notfound',
       component: NotFound,
     }
+    
 ];
 
 const router = createRouter({
@@ -65,16 +71,33 @@ const router = createRouter({
   routes
 })
 
+// router.beforeEach((to, from, next) => {
+//   console.log(to);
+//   if (to.meta.requiresAuth && !store.state.user.token) {
+//     next({name: 'login'})
+//   } else if (to.meta.requiresGuest && store.state.user.token) {
+//     next({name: 'app.dashboard'})
+//   } else {
+//     next();
+//   }
+
+// })
 router.beforeEach((to, from, next) => {
-  console.log(to);
-  if (to.meta.requiresAuth && !store.state.user.token) {
-    next({name: 'login'})
-  } else if (to.meta.requiresGuest && store.state.user.token) {
-    next({name: 'app.dashboard'})
+  console.log("Navigating to:", to.fullPath);
+
+  const isAuthenticated = store.state.user?.token;
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    console.log("User not authenticated, redirecting to login...");
+    next({ name: 'login' });
+  } else if (to.meta.requiresGuest && isAuthenticated) {
+    console.log("User already logged in, redirecting to dashboard...");
+    next({ name: 'app.dashboard' });
   } else {
+    console.log("Proceeding to:", to.fullPath);
     next();
   }
+});
 
-})
 
 export default router;
