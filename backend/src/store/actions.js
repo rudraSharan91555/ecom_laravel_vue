@@ -3,6 +3,7 @@ import axiosClient from "../axios";
 export function getUser({commit}, data) {
   return axiosClient.get('/user', data)
     .then(({data}) => {
+      // debugger
       commit('setUser', data);
       return data;
     })

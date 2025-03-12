@@ -1,5 +1,5 @@
-
 export function setUser(state, user) {
+  // debugger;
     state.user.data = user;
   }
   
