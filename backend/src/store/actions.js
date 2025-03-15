@@ -3,7 +3,6 @@ import axiosClient from "../axios";
 export function getUser({commit}, data) {
   return axiosClient.get('/user', data)
     .then(({data}) => {
-      // debugger
       commit('setUser', data);
       return data;
     })
@@ -18,14 +17,11 @@ export function login({commit}, data) {
     })
 }
 
-
-export function logout({ commit }) {
+export function logout({commit}) {
   return axiosClient.post('/logout')
-    .then(() => { 
-      commit('setToken', null);
-      commit('setUser', {}); 
+    .then((response) => {
+      commit('setToken', null)
+
+      return response;
     })
-    .catch(error => {
-      console.error("Logout Error:", error);
-    });
 }

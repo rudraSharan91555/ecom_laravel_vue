@@ -57,12 +57,11 @@ const routes = [
       requiresGuest: true
     }
   },
-    {
-      path: '/:pathMatch(.*)*',
-      name: 'notfound',
-      component: NotFound,
-    }
-    
+  {
+    path: '/:pathMatch(.*)',
+    name: 'notfound',
+    component: NotFound,
+  }
 ];
 
 const router = createRouter({
@@ -71,18 +70,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = store.state.user.token;
-
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    next({ name: "login" });
-  } else if (to.meta.requiresGuest && isAuthenticated) {
-    next({ name: "app.dashboard" });
+  if (to.meta.requiresAuth && !store.state.user.token) {
+    next({name: 'login'})
+  } else if (to.meta.requiresGuest && store.state.user.token) {
+    next({name: 'app.dashboard'})
   } else {
     next();
   }
-});
 
-
-
+})
 
 export default router;
