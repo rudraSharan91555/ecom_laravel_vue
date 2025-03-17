@@ -24,12 +24,15 @@
     </div>
   </template>
   
-  <script setup>
- const {text} = defineProps({
-  text: {
-    type: String,
-    default: 'Please Wait...'
-  }
-})
+  <script >
+  export default {
+    name: "Spinner",
+    props: {
+      text: {
+        type: String,
+        default: "Please Wait...",
+      },
+    },
+  };
   </script>
   

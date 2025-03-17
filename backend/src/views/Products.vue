@@ -1,4 +1,5 @@
 <template>
+  <!-- <pre>{{ products.data }}</pre> -->
 <div class="flex item-center justify-between mb-3">
     <!-- <h1 class="text-3xl font-semibold">Products</h1> -->
     <h1 class="text-3xl font-semibold text-gray-800 mb-4">Products</h1>
@@ -41,7 +42,8 @@
         <tr v-for="product of products.data">
           <td class="border-b p-2">{{ product.id }}</td>
           <td class="border-b p-2">
-            <img class="w-16" :src="product.img" :alt="product.title">
+            <img class="w-16" :src="product.image_url" :alt="product.title">
+            
           </td>
           <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
             {{ product.title }}
@@ -53,6 +55,7 @@
             {{ product.updated_at }}
           </td>
         </tr>
+
       </tbody>
       </table>
     </template>
@@ -62,8 +65,10 @@
 <script setup>
 import { computed,ref,onMounted } from 'vue';
 import store from '../store';
+import Spinner from '../components/core/Spinner.vue';
+import { PRODUCTS_PER_PAGE } from '../constants';
 
-const perPage = ref(10)
+const perPage = ref(PRODUCTS_PER_PAGE)
 const search = ref('')
 const products = computed(() => store.state.products)
 
