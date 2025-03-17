@@ -23,7 +23,7 @@ import {ref, computed, onMounted, onUnmounted} from 'vue'
 import Sidebar from "./Sidebar.vue";
 import Navbar from "./Navbar.vue";
 import store from "../store";
-import Spinner from './core/spinner.vue';
+
 
 const {title} = defineProps({
   title: String
