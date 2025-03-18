@@ -21,9 +21,7 @@ export function setProducts(state,[loading,response = null]){
       limit: response.meta.per_page,
       from: response.meta.from,
       to: response.meta.to,
-      page:response.meta.current_page,
-      
-          
+      page:response.meta.current_page,          
     }
   }
   state.products.loading = loading;
