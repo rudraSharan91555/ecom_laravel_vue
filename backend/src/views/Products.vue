@@ -107,8 +107,8 @@ onMounted(()=>{
   getProducts();
 })
 
-function getProducts(){
-  store.dispatch('getProducts')
+function getProducts(url = null){
+  store.dispatch('getProducts',{url})
 }
 
 
