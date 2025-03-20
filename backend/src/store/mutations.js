@@ -26,3 +26,4 @@ export function setProducts(state,[loading,response = null]){
   }
   state.products.loading = loading;
 }
+
