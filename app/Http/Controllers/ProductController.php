@@ -15,7 +15,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ProductListResource::collection(Product::query()->paginate(10));
+        $perPage = request('per_page', 10);
+        $search = request('search', '');
+        $query = Product::query();
+        if($search){
+             $query->where('title', 'like', "%{$search}%")
+            ->onWhere('description','like',"%{$search}%");;
+            
+        }
+        return ProductListResource::collection($query->paginate($perPage));
     }
 
     /**
