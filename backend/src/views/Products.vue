@@ -31,11 +31,11 @@
       <table class="table-auto w-full">
         <thead>
         <tr>
-          <th class="border-b-2 p-2 text-left">ID</th>
-          <th class="border-b-2 p-2 text-left">Image</th>
-          <th class="border-b-2 p-2 text-left">Title</th>
-          <th class="border-b-2 p-2 text-left">Price</th>
-          <th class="border-b-2 p-2 text-left">Last Update At</th>
+          <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="id" :sort-field="sortField" :sort-direction="sortDirection">ID</TableHeaderCell>
+          <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="" :sort-field="sortField" :sort-direction="sortDirection">Image</TableHeaderCell>
+          <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="title" :sort-field="sortField" :sort-direction="sortDirection">Title</TableHeaderCell>
+          <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="price" :sort-field="sortField" :sort-direction="sortDirection">Price</TableHeaderCell>
+          <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="update_at" :sort-field="sortField" :sort-direction="sortDirection">Last Update At</TableHeaderCell>
         </tr>
       </thead>
       <tbody>
@@ -98,10 +98,13 @@ import { computed,ref,onMounted } from 'vue';
 import store from '../store';
 import Spinner from '../components/core/Spinner.vue';
 import { PRODUCTS_PER_PAGE } from '../constants';
+import TableHeaderCell from '../components/Table/TableHeaderCell.vue';
 
 const perPage = ref(PRODUCTS_PER_PAGE)
 const search = ref('')
 const products = computed(() => store.state.products)
+const sortField = ref('updated_at')
+const sortDirection = ref('desc')
 
 onMounted(()=>{
   getProducts();
@@ -124,6 +127,10 @@ function getForPage(ev, link) {
   }
 
   getProducts(link.url)
+}
+
+function sortProduct(field){
+  debugger;
 }
 
 </script>
