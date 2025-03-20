@@ -1,13 +1,5 @@
 <template>
-  <!-- <pre>{{ products.data }}</pre> -->
-<div class="flex item-center justify-between mb-3">
-    <!-- <h1 class="text-3xl font-semibold">Products</h1> -->
-    <h1 class="text-3xl font-semibold text-gray-800 mb-4">Products</h1>
-    <button type="submit" class="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Add new Product
-    </button>
-</div>
-<div class="bg-white p-4 rounded-lg shadow">
+   <div class="bg-white p-4 rounded-lg shadow">
     <div class="flex justify-between border-b-2 pb-3">
         <div class="flex items-center">
             <span class="whitespace-nowrap mr-3">Per Page</span>
@@ -26,7 +18,6 @@
             placeholder="Type to Search products">
         </div>
     </div>
-    <!-- <template > -->
       <table class="table-auto w-full">
         <thead>
         <tr>
@@ -93,68 +84,67 @@
           v-html="link.label"
         >
         </a>
-      </nav>
+      </nav>          
       </div>
-    <!-- </template> -->
 </div>
-</template>
-
-<script setup>
-import { computed,ref,onMounted } from 'vue';
-import store from '../store';
-import Spinner from '../components/core/Spinner.vue';
-import { PRODUCTS_PER_PAGE } from '../constants';
-import TableHeaderCell from '../components/Table/TableHeaderCell.vue';
-
-const perPage = ref(PRODUCTS_PER_PAGE)
-const search = ref('')
-const products = computed(() => store.state.products)
-const sortField = ref('updated_at')
-const sortDirection = ref('desc')
-
-onMounted(()=>{
-  getProducts();
-})
-
-function getProducts(url = null){
-  store.dispatch('getProducts',{
-    url,
-    sort_field: sortField.value,
-    sort_direction: sortDirection.value,
-    search: search.value,
-    perPage: perPage.value
+  </template>
+  
+  <script setup>
+  import { computed,ref,onMounted } from 'vue';
+  import store from '../../store';
+  import Spinner from '../../components/core/Spinner.vue';
+  import { PRODUCTS_PER_PAGE } from '../../constants';
+  import TableHeaderCell from '../../components/Table/TableHeaderCell.vue';
+  
+  const perPage = ref(PRODUCTS_PER_PAGE)
+  const search = ref('')
+  const products = computed(() => store.state.products)
+  const sortField = ref('updated_at')
+  const sortDirection = ref('desc')
+  
+  onMounted(()=>{
+    getProducts();
   })
-}
-
-
-
-function getForPage(ev, link) {
-  ev.preventDefault();
-  if (!link.url || link.active) {
-    return;
+  
+  function getProducts(url = null){
+    store.dispatch('getProducts',{
+      url,
+      sort_field: sortField.value,
+      sort_direction: sortDirection.value,
+      search: search.value,
+      perPage: perPage.value
+    })
   }
-
-  getProducts(link.url)
-}
-
-
-function sortProduct(field) {
-  if (sortField.value === field) {
-    if (sortDirection.value === 'desc') {
-      sortDirection.value = 'asc'
-    } else {
-      sortDirection.value = 'desc'
+  
+  
+  
+  function getForPage(ev, link) {
+    ev.preventDefault();
+    if (!link.url || link.active) {
+      return;
     }
-  } else {
-    sortField.value = field;
-    sortDirection.value = 'asc'
+  
+    getProducts(link.url)
   }
-
-  getProducts
-}
-
-</script>
-
-<style scoped>
-
-</style>
+  
+  
+  function sortProduct(field) {
+    if (sortField.value === field) {
+      if (sortDirection.value === 'desc') {
+        sortDirection.value = 'asc'
+      } else {
+        sortDirection.value = 'desc'
+      }
+    } else {
+      sortField.value = field;
+      sortDirection.value = 'asc'
+    }
+  
+    getProducts
+  }
+  
+  </script>
+  
+  <style scoped>
+  
+  </style>                                                                                            
