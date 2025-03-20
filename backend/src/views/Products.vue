@@ -26,19 +26,25 @@
             placeholder="Type to Search products">
         </div>
     </div>
-    <Spinner v-if="products.loading"/>
-    <template v-else>
+    <!-- <template > -->
       <table class="table-auto w-full">
         <thead>
         <tr>
           <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="id" :sort-field="sortField" :sort-direction="sortDirection">ID</TableHeaderCell>
-          <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="" :sort-field="sortField" :sort-direction="sortDirection">Image</TableHeaderCell>
+          <TableHeaderCell  class="border-b-2 p-2 text-left" field="" :sort-field="sortField" :sort-direction="sortDirection">Image</TableHeaderCell>
           <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="title" :sort-field="sortField" :sort-direction="sortDirection">Title</TableHeaderCell>
           <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="price" :sort-field="sortField" :sort-direction="sortDirection">Price</TableHeaderCell>
           <TableHeaderCell @click="sortProduct" class="border-b-2 p-2 text-left" field="update_at" :sort-field="sortField" :sort-direction="sortDirection">Last Update At</TableHeaderCell>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="products.loading">
+        <tr>
+          <td colspan="5">
+            <Spinner class="my-4" v-if="products.loading"/>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
         <tr v-for="product of products.data">
           <td class="border-b p-2">{{ product.id }}</td>
           <td class="border-b p-2">
@@ -58,7 +64,7 @@
 
       </tbody>
       </table>
-      <div class="flex justify-between items-center mt-5">
+      <div v-if="!products.loading" class="flex justify-between items-center mt-5">
         <span>
           Showing from {{ products.from }} to {{ products.to }}
         </span>
@@ -89,7 +95,7 @@
         </a>
       </nav>
       </div>
-    </template>
+    <!-- </template> -->
 </div>
 </template>
 
@@ -113,6 +119,8 @@ onMounted(()=>{
 function getProducts(url = null){
   store.dispatch('getProducts',{
     url,
+    sort_field: sortField.value,
+    sort_direction: sortDirection.value,
     search: search.value,
     perPage: perPage.value
   })
@@ -129,8 +137,20 @@ function getForPage(ev, link) {
   getProducts(link.url)
 }
 
-function sortProduct(field){
-  debugger;
+
+function sortProduct(field) {
+  if (sortField.value === field) {
+    if (sortDirection.value === 'desc') {
+      sortDirection.value = 'asc'
+    } else {
+      sortDirection.value = 'desc'
+    }
+  } else {
+    sortField.value = field;
+    sortDirection.value = 'asc'
+  }
+
+  getProducts
 }
 
 </script>
