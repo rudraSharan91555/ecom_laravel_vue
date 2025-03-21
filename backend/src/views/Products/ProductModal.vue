@@ -60,7 +60,7 @@
     </TransitionRoot>
   </template>
   
-  <script setup>
+  <!-- <script setup>
   import { ref } from 'vue'
   import {
     TransitionRoot,
@@ -86,5 +86,29 @@
     show.value = false
   }
   
-  </script>
-  
+  </script> -->
+  <script setup>
+import { ref, computed } from 'vue'
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+} from '@headlessui/vue'
+
+const props = defineProps({
+  modelValue: Boolean
+})
+
+const emit = defineEmits(['update:modelValue']) // Corrected event name
+
+const show = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value) // Corrected event name
+})
+
+function closeModal() {
+  show.value = false
+}
+</script>
