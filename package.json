@@ -14,6 +14,7 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
+        "@headlessui/vue": "^1.7.23",
         "@vue/compiler-sfc": "^3.5.13",
         "vuex": "^4.1.0"
     }
